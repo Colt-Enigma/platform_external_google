@@ -1,5 +1,6 @@
 package com.google.android.systemui.elmyra.actions;
 
+import android.content.ContentResolver;
 import android.content.pm.ActivityInfo;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -40,17 +41,19 @@ public class ShortSqueezeCustomApp extends AppPicker {
     }
 
     protected void setPackage(String packageName, String friendlyAppString) {
-        Settings.Secure.putStringForUser(getContentResolver(),
+        final ContentResolver resolver = getContentResolver();
+        Settings.Secure.putStringForUser(resolver,
                 Settings.Secure.SHORT_SQUEEZE_CUSTOM_APP, packageName,
                 UserHandle.USER_CURRENT);
-        Settings.Secure.putStringForUser(getContentResolver(),
+        Settings.Secure.putStringForUser(resolver,
                 Settings.Secure.SHORT_SQUEEZE_CUSTOM_APP_FR_NAME, friendlyAppString,
                 UserHandle.USER_CURRENT);
     }
 
     protected void setPackageActivity(ActivityInfo ai) {
+        final ContentResolver resolver = getContentResolver();
         Settings.Secure.putStringForUser(
-                getContentResolver(), Settings.Secure.SHORT_SQUEEZE_CUSTOM_ACTIVITY,
+                resolver, Settings.Secure.SHORT_SQUEEZE_CUSTOM_ACTIVITY,
                 ai != null ? ai.name : "NONE",
                 UserHandle.USER_CURRENT);
     }
